@@ -122,5 +122,71 @@ describe("deepClone", () => {
             assert(a.xxx.yyy !== a2.xxx.yyy);
             assert(a.xxx !== a2.xxx);
         });
+        it("最后一个复杂对象", () => {
+            const a = {
+                n: NaN,
+                n2: Infinity,
+                s: "",
+                bool: true,
+                null: null,
+                u: undefined,
+                symbol: Symbol(),
+                o: {
+                    n: NaN,
+                    n2: Infinity,
+                    s: "",
+                    b: true,
+                    null: null,
+                    u: undefined,
+                    s: Symbol(),
+                },
+                a: [
+                    {
+                        n: NaN,
+                        n2: Infinity,
+                        s: "",
+                        b: true,
+                        null: null,
+                        u: undefined,
+                        s: Symbol(),
+                    },
+                ],
+                f: function () {
+                    return "123";
+                },
+                date: new Date(),
+                reg: /hi\d+/gi,
+            };
+            const a2 = deepClone(a);
+
+            assert(a !== a2);
+            assert.isNaN(a2.n);
+            assert(a.n2 === a2.n2);
+            assert(a.s === a2.s);
+            assert(a.bool === a2.bool);
+            assert(a.null === a2.null);
+            assert(a.u === a2.u);
+            assert(a.symbol === a2.symbol);
+
+            assert(a.o !== a2.o);
+            assert.isNaN(a2.o.n);
+            assert(a.o.n2 === a2.o.n2);
+            assert(a.o.s === a2.o.s);
+            assert(a.o.bool === a2.o.bool);
+            assert(a.o.null === a2.o.null);
+            assert(a.o.u === a2.o.u);
+            assert(a.o.symbol === a2.o.symbol);
+
+            assert(a.a !== a2.a);
+            assert(a.a[0] !== a2.a[0]);
+            assert.isNaN(a2.a[0].n);
+            assert(a.a[0].n2 === a2.a[0].n2);
+            assert(a.a[0].s === a2.a[0].s);
+            assert(a.a[0].bool === a2.a[0].bool);
+            assert(a.a[0].null === a2.a[0].null);
+            assert(a.a[0].u === a2.a[0].u);
+            assert(a.a[0].symbol === a2.a[0].symbol);
+            // assert.deepEqual(a, a2);
+        });
     });
 });
