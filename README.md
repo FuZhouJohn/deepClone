@@ -3,3 +3,7 @@
 ```bash
 yarn test
 ```
+
+```bash
+npm run test
+```
