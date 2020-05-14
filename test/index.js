@@ -14,5 +14,25 @@ describe("deepClone", () => {
         const n = 123;
         const n2 = deepClone(n);
         assert(n === n2);
+
+        const s = "123";
+        const s2 = deepClone(s);
+        assert(s === s2);
+
+        const b = true;
+        const b2 = deepClone(b);
+        assert(b === b2);
+
+        const u = undefined;
+        const u2 = deepClone(u);
+        assert(u === u2);
+
+        const empty = null;
+        const empty2 = deepClone(empty);
+        assert(empty === empty2);
+
+        const sym = Symbol();
+        const sym2 = deepClone(sym);
+        assert(sym === sym2);
     });
 });
