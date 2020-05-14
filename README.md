@@ -4,6 +4,8 @@
 yarn test
 ```
 
+or
+
 ```bash
 npm run test
 ```
