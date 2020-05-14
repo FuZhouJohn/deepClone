@@ -78,5 +78,39 @@ describe("deepClone", () => {
             assert(a.name === a2.name);
             assert(a.self !== a2.self);
         });
+        xit("防止爆栈", () => {
+            const a = { child: null };
+            let b = a;
+            for (let i = 0; i < 20000; i++) {
+                b.child = {
+                    child: null,
+                };
+                b = b.child;
+            }
+            const a2 = deepClone(a);
+            assert(a !== a2);
+            assert(a.child !== a2.child);
+        });
+        it("能够复制正则表达式", () => {
+            const a = /hi\d+/gi;
+            a.xxx = { yyy: { zzz: 1 } };
+            const a2 = deepClone(a);
+            assert(a.source === a2.source);
+            assert(a.flags === a2.flags);
+            assert(a !== a2);
+            assert(a.xxx.yyy.zzz === a2.xxx.yyy.zzz);
+            assert(a.xxx.yyy !== a2.xxx.yyy);
+            assert(a.xxx !== a2.xxx);
+        });
+        it("能够复制 Date", () => {
+            const a = new Date();
+            a.xxx = { yyy: { zzz: 1 } };
+            const a2 = deepClone(a);
+            assert(a !== a2);
+            assert(a.getTime() === a2.getTime());
+            assert(a.xxx.yyy.zzz === a2.xxx.yyy.zzz);
+            assert(a.xxx.yyy !== a2.xxx.yyy);
+            assert(a.xxx !== a2.xxx);
+        });
     });
 });
